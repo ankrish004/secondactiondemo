@@ -1,4 +1,4 @@
-name: Test Workflow
+name: deploy project
 on: push
 jobs:
     test:
@@ -14,3 +14,22 @@ jobs:
               run: npm ci 
             - name: run tests
               run: npm test
+
+    Deploy:
+        runs-on: ubuntu-latest
+
+
+        steps:
+            - name: get the code
+              uses: actions/checkout@v2
+            - name: install node
+              uses: actions/setup-node@v2
+              with:
+                node-version: '18'
+            - name: install dependencies
+              run: npm ci             
+            - name: build project
+              run: npm run build
+            - name: deploy to gh-pages
+              run: echo "Deploying to gh-pages"
+              # Here you would add the actual deployment commands, such as:
